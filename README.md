@@ -1,3 +1,2 @@
 # Tubes-TBA
-Tugas Besar TBA
-Halo di sini tugas besar
+Tugas besar mata kuliah Teori Bahasa dan Automata
