@@ -1,6 +1,6 @@
 import string
 
-sentence = input('masukkan sentence: ')
+sentence = input('Masukkan kalimat : ')
 inputString = sentence.lower()+'#'
 
 alphabetList = list(string.ascii_lowercase)
