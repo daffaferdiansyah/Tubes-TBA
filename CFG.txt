@@ -1,3 +1,3 @@
 S : NVN
-N : aku | koe | kembang | banyu | sego | lawang | layang
+N : aku | koe | kembang | banyu | sego | lawang | layang | banyu
 V : mangan | ngombe | tuku
