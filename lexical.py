@@ -78,6 +78,13 @@ transitionTable['q20', 'm'] = 'q26'
 transitionTable['q26', 'b'] = 'q30'
 transitionTable['q30', 'e'] = 'q31'
 
+# banyu
+transitionTable['q0', 'b'] = 'q32'
+transitionTable['q32', 'a'] = 'q33'
+transitionTable['q33', 'n'] = 'q34'
+transitionTable['q34', 'y'] = 'q35'
+transitionTable['q35', 'u'] = 'q31'
+
 # accept
 transitionTable['q0', '#'] = 'accept'
 transitionTable['q31', '#'] = 'accept'
