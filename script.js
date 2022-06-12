@@ -137,50 +137,50 @@ function parser(sentence) {
     tokens.push('EOS')
 
     // symbol definition
-    let nonTerminals = ['S', 'NN', 'VB']
+    let nonTerminals = ['S', 'N', 'V']
     let terminals = ['aku', 'koe', 'kembang', 'lawang', 'layang', 'tuku', 'mangan', 'manuk', 'sego', 'ngombe', 'banyu']
 
     // parse table definition
     let parseTable = {}
 
-    parseTable[('S, aku')] = ['NN', 'VB', 'NN']
-    parseTable[('S, koe')] = ['NN', 'VB', 'NN']
-    parseTable[('S, layang')] = ['NN', 'VB', 'NN']
-    parseTable[('S, lawang')] = ['NN', 'VB', 'NN']
-    parseTable[('S, kembang')] = ['NN', 'VB', 'NN']
-    parseTable[('S, manuk')] = ['NN', 'VB', 'NN']
-    parseTable[('S, sego')] = ['NN', 'VB', 'NN']
-    parseTable[('S, banyu')] = ['NN', 'VB', 'NN']
+    parseTable[('S, aku')] = ['N', 'V', 'N']
+    parseTable[('S, koe')] = ['N', 'V', 'N']
+    parseTable[('S, layang')] = ['N', 'V', 'N']
+    parseTable[('S, lawang')] = ['N', 'V', 'N']
+    parseTable[('S, kembang')] = ['N', 'V', 'N']
+    parseTable[('S, manuk')] = ['N', 'V', 'N']
+    parseTable[('S, sego')] = ['N', 'V', 'N']
+    parseTable[('S, banyu')] = ['N', 'V', 'N']
     parseTable[('S, mangan')] = ['error']
     parseTable[('S, ngombe')] = ['error']
     parseTable[('S, tuku')] = ['error']
     parseTable[('S, EOS')] = ['error']
 
-    parseTable[('NN, aku')] = ['aku']
-    parseTable[('NN, koe')] = ['koe']
-    parseTable[('NN, layang')] = ['layang']
-    parseTable[('NN, lawang')] = ['lawang']
-    parseTable[('NN, kembang')] = ['kembang']
-    parseTable[('NN, manuk')] = ['manuk']
-    parseTable[('NN, sego')] = ['sego']
-    parseTable[('NN, banyu')] = ['banyu']
-    parseTable[('NN, mangan')] = ['error']
-    parseTable[('NN, ngombe')] = ['error']
-    parseTable[('NN, tuku')] = ['error']
-    parseTable[('NN, EOS')] = ['error']
+    parseTable[('N, aku')] = ['aku']
+    parseTable[('N, koe')] = ['koe']
+    parseTable[('N, layang')] = ['layang']
+    parseTable[('N, lawang')] = ['lawang']
+    parseTable[('N, kembang')] = ['kembang']
+    parseTable[('N, manuk')] = ['manuk']
+    parseTable[('N, sego')] = ['sego']
+    parseTable[('N, banyu')] = ['banyu']
+    parseTable[('N, mangan')] = ['error']
+    parseTable[('N, ngombe')] = ['error']
+    parseTable[('N, tuku')] = ['error']
+    parseTable[('N, EOS')] = ['error']
 
-    parseTable[('VB, aku')] = ['error']
-    parseTable[('VB, koe')] = ['error']
-    parseTable[('VB, layang')] = ['error']
-    parseTable[('VB, lawang')] = ['error']
-    parseTable[('VB, kembang')] = ['error']
-    parseTable[('VB, manuk')] = ['error']
-    parseTable[('VB, sego')] = ['error']
-    parseTable[('VB, banyu')] = ['error']
-    parseTable[('VB, mangan')] = ['mangan']
-    parseTable[('VB, ngombe')] = ['ngombe']
-    parseTable[('VB, tuku')] = ['tuku']
-    parseTable[('VB, EOS')] = ['error']
+    parseTable[('V, aku')] = ['error']
+    parseTable[('V, koe')] = ['error']
+    parseTable[('V, layang')] = ['error']
+    parseTable[('V, lawang')] = ['error']
+    parseTable[('V, kembang')] = ['error']
+    parseTable[('V, manuk')] = ['error']
+    parseTable[('V, sego')] = ['error']
+    parseTable[('V, banyu')] = ['error']
+    parseTable[('V, mangan')] = ['mangan']
+    parseTable[('V, ngombe')] = ['ngombe']
+    parseTable[('V, tuku')] = ['tuku']
+    parseTable[('V, EOS')] = ['error']
 
     // stack initialization
     let stack = []
@@ -254,29 +254,16 @@ document.addEventListener('DOMContentLoaded', function () {
         parserResult.innerHTML = '';
         details.innerHTML = '';
 
-        // Show spinner for 1.5 seconds
-        lexicalResult.innerHTML = '<img src="assets/138.gif" alt="loading..." style="width: 35px; height: 35px;">';
-
         setTimeout(() => {
             if (lexicalAnalyzer(input)) {
-                lexicalResult.innerHTML = `<p>\"${input}\" is accepted by lexical analyzer,</p>`;
-            } else {
-                lexicalResult.innerHTML = `<p>\"${input}\" is rejected by lexical analyzer,</p>`;
-            }
-
-            //Show spinner for 1.5 seconds
-            parserResult.innerHTML = '<img src="assets/138.gif" alt="loading..." style="width: 35px; height: 35px;">';
-            setTimeout(() => {
                 if (parser(input)) {
-                    parserResult.innerHTML = `<p>...and accepted by the parser.</p>`;
+                    parserResult.innerHTML = `<p>\"${input}\" adalah inputan yang VALID</p>`;
                 } else {
-                    parserResult.innerHTML = `<p>...and rejected by the parser.</p>`;
+                    parserResult.innerHTML = `<p>\"${input}\" adalah inputan yang TIDAK VALID</p>`;
                 }
-
-                setTimeout(() => {
-                    details.innerHTML = `<p>For more details, open your console in DevTools (ctrl+shift+i)</p>`;
-                }, 500);
-            }, 1500);
+            } else {
+                lexicalResult.innerHTML = `<p>\"${input}\" adalah inputan yang TIDAK VALID</p>`;
+            }
         }, 1500);
     }
 
