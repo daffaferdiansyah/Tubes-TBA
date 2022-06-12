@@ -69,11 +69,23 @@ function lexicalAnalyzer(sentence) {
     transitionTable[('q24, a')] = 'q28'
     transitionTable[('q28, n')] = 'q31'
 
+    //manuk
+    transitionTable[('q19, u')] = 'q25'
+    transitionTable[('q25, k')] = 'q31'
+
     //sego
     transitionTable[('q0, s')] = 'q6'
     transitionTable[('q6, e')] = 'q13'
     transitionTable[('q13, g')] = 'q29'
     transitionTable[('q29, o')] = 'q31'
+
+    //ngombe
+    transitionTable[('q0, n')] = 'q7'
+    transitionTable[('q7, g')] = 'q14'
+    transitionTable[('q14, o')] = 'q20'
+    transitionTable[('q20, m')] = 'q26'
+    transitionTable[('q26, b')] = 'q30'
+    transitionTable[('q30, e')] = 'q31'
 
     //banyu
     transitionTable[('q0, b')] = 'q32'
@@ -83,31 +95,30 @@ function lexicalAnalyzer(sentence) {
     transitionTable[('q35, u')] = 'q31'
 
     //space
-    transitionTable[('q0,  ')] = 'q0'
-    transitionTable[('q31, ')] = 'q0'
+    transitionTable[("q0,  ")] = 'q0'
+    transitionTable[("q31,  ")] = 'q0'
 
     //accept
     transitionTable[('q0, #')] = 'accept'
-    transitionTable[('q31, #')] = 'q0'
+    transitionTable[('q31, #')] = 'accept'
 
     // lexical analysis
-    let idxToken = 0
-    let state = 'q0'
+    let idxChar = 0
     let currentToken = ''
-    for (let idx_char = 0; state != 'accept'; idx_char++) {
-        let currentChar = inputString[idx_char]
+    let state = 'q0'
+    while (state != 'accept') {
+        let currentChar = inputString[idxChar]
         currentToken += currentChar
         state = transitionTable[(`${state}, ${currentChar}`)]
         if (state == 'q0' || state == 'q31') {
-            idxToken += 1
-            console.log(`Token ${idxToken}: ${currentToken} is valid`)
-            currentToken = ''
+            console.log(`Token ${idxChar}: ${currentToken} is valid`)
+            currentToken = ' '
         }
         if (state == 'error') {
-            idxToken += 1
-            console.log(`Token ${idxToken}: ${currentToken} is invalid!`)
+            console.log(`Token ${idxChar}: ${currentToken} is invalid!`)
             break
         }
+        idxChar += 1
     }
 
     // conclusion
@@ -119,3 +130,48 @@ function lexicalAnalyzer(sentence) {
         return false
     }
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const formInput = document.querySelector('#input');
+    const lexicalResult = document.querySelector('#lexical');
+    const parserResult = document.querySelector('#parser');
+    const details = document.querySelector('#details');
+
+    const onSubmit = async (event) => {
+        event.preventDefault();
+        const input = formInput.value;
+        console.clear()
+
+        lexicalResult.innerHTML = '';
+        parserResult.innerHTML = '';
+        details.innerHTML = '';
+
+        // Show spinner for 1.5 seconds
+        lexicalResult.innerHTML = '<img src="assets/138.gif" alt="loading..." style="width: 35px; height: 35px;">';
+
+        setTimeout(() => {
+            if (lexicalAnalyzer(input)) {
+                lexicalResult.innerHTML = `<p>\"${input}\" is accepted by lexical analyzer,</p>`;
+            } else {
+                lexicalResult.innerHTML = `<p>\"${input}\" is rejected by lexical analyzer,</p>`;
+            }
+
+            // Show spinner for 1.5 seconds
+            // parserResult.innerHTML = '<img src="assets/138.gif" alt="loading..." style="width: 35px; height: 35px;">';
+            // setTimeout(() => {
+            //     if (parser(input)) {
+            //         parserResult.innerHTML = `<p>...and accepted by the parser.</p>`;
+            //     } else {
+            //         parserResult.innerHTML = `<p>...and rejected by the parser.</p>`;
+            //     }
+
+                setTimeout(() => {
+                    details.innerHTML = `<p>For more details, open your console in DevTools (ctrl+shift+i)</p>`;
+                }, 500);
+            // }, 1500);
+        }, 1500);
+    }
+
+    const button = document.querySelector('button');
+    button.addEventListener('click', onSubmit);
+});
