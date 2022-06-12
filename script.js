@@ -2,7 +2,6 @@ function lexicalAnalyzer(sentence) {
     console.log(`====== Lexical Analyzer Result ======`);
     let inputString = sentence.toLowerCase() + '#'
 
-    // initializations
     let alphabetList = 'abcdefghijklmnopqrstuvwxyz'
     let stateList = [
         'q0', 'q1', 'q2', 'q3', 'q4',
@@ -34,7 +33,7 @@ function lexicalAnalyzer(sentence) {
 
     //koe
     transitionTable[('q0, k')] = 'q2'
-    transitionTable[('q2, 0')] = 'q15'
+    transitionTable[('q2, o')] = 'q15'
     transitionTable[('q15, e')] = 'q31'
 
     //kembang
@@ -131,6 +130,115 @@ function lexicalAnalyzer(sentence) {
     }
 }
 
+
+function parser(sentence) {
+    console.log(`=========== Parser Result ===========`)
+    let tokens = sentence.toLowerCase().split(' ')
+    tokens.push('EOS')
+
+    // symbol definition
+    let nonTerminals = ['S', 'NN', 'VB']
+    let terminals = ['aku', 'koe', 'kembang', 'lawang', 'layang', 'tuku', 'mangan', 'manuk', 'sego', 'ngombe', 'banyu']
+
+    // parse table definition
+    let parseTable = {}
+
+    parseTable[('S, aku')] = ['NN', 'VB', 'NN']
+    parseTable[('S, koe')] = ['NN', 'VB', 'NN']
+    parseTable[('S, layang')] = ['NN', 'VB', 'NN']
+    parseTable[('S, lawang')] = ['NN', 'VB', 'NN']
+    parseTable[('S, kembang')] = ['NN', 'VB', 'NN']
+    parseTable[('S, manuk')] = ['NN', 'VB', 'NN']
+    parseTable[('S, sego')] = ['NN', 'VB', 'NN']
+    parseTable[('S, banyu')] = ['NN', 'VB', 'NN']
+    parseTable[('S, mangan')] = ['error']
+    parseTable[('S, ngombe')] = ['error']
+    parseTable[('S, tuku')] = ['error']
+    parseTable[('S, EOS')] = ['error']
+
+    parseTable[('NN, aku')] = ['aku']
+    parseTable[('NN, koe')] = ['koe']
+    parseTable[('NN, layang')] = ['layang']
+    parseTable[('NN, lawang')] = ['lawang']
+    parseTable[('NN, kembang')] = ['kembang']
+    parseTable[('NN, manuk')] = ['manuk']
+    parseTable[('NN, sego')] = ['sego']
+    parseTable[('NN, banyu')] = ['banyu']
+    parseTable[('NN, mangan')] = ['error']
+    parseTable[('NN, ngombe')] = ['error']
+    parseTable[('NN, tuku')] = ['error']
+    parseTable[('NN, EOS')] = ['error']
+
+    parseTable[('VB, aku')] = ['error']
+    parseTable[('VB, koe')] = ['error']
+    parseTable[('VB, layang')] = ['error']
+    parseTable[('VB, lawang')] = ['error']
+    parseTable[('VB, kembang')] = ['error']
+    parseTable[('VB, manuk')] = ['error']
+    parseTable[('VB, sego')] = ['error']
+    parseTable[('VB, banyu')] = ['error']
+    parseTable[('VB, mangan')] = ['mangan']
+    parseTable[('VB, ngombe')] = ['ngombe']
+    parseTable[('VB, tuku')] = ['tuku']
+    parseTable[('VB, EOS')] = ['error']
+
+    // stack initialization
+    let stack = []
+    stack.push('#')
+    stack.push('S')
+
+    // input reading initialization
+    let idxToken = 0
+    let symbol = tokens[idxToken]
+
+    // parsing
+    while (stack.length > 0) {
+        let top = stack[stack.length - 1]
+        console.log(`Top: ${top}`)
+        console.log(`Symbol: ${symbol}`)
+        if (terminals.includes(top)) {
+            console.log(`${top} is a terminal`)
+            if (top == symbol) {
+                stack.pop()
+                idxToken += 1
+                symbol = tokens[idxToken]
+                if (symbol == 'EOS') {
+                    console.log(`Stack: ${stack}`)
+                    stack.pop()
+                }
+            } else {
+                console.log('Error')
+                break
+            }
+        } else if (nonTerminals.includes(top)) {
+            console.log(`${top} is a non-terminal`)
+            if (parseTable[(`${top}, ${symbol}`)] && parseTable[(`${top}, ${symbol}`)][0] != 'error') {
+                stack.pop()
+                let pushed_symbol = parseTable[(`${top}, ${symbol}`)]
+                for (let i = pushed_symbol.length - 1; i >= 0; i--) {
+                    stack.push(pushed_symbol[i])
+                }
+            } else {
+                console.log('Error')
+                break
+            }
+        } else {
+            console.log('Parsing error')
+            break
+        }
+        console.log(`Stack: ${stack}\n`)
+    }
+
+    // conclusion
+    if (symbol == 'EOS' && stack.length == 0) {
+        console.log(`Input ${sentence} is accepted!`)
+        return true
+    } else {
+        console.log(`Input ${sentence} is rejected! Check your grammar!`)
+        return false
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     const formInput = document.querySelector('#input');
     const lexicalResult = document.querySelector('#lexical');
@@ -156,19 +264,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 lexicalResult.innerHTML = `<p>\"${input}\" is rejected by lexical analyzer,</p>`;
             }
 
-            // Show spinner for 1.5 seconds
-            // parserResult.innerHTML = '<img src="assets/138.gif" alt="loading..." style="width: 35px; height: 35px;">';
-            // setTimeout(() => {
-            //     if (parser(input)) {
-            //         parserResult.innerHTML = `<p>...and accepted by the parser.</p>`;
-            //     } else {
-            //         parserResult.innerHTML = `<p>...and rejected by the parser.</p>`;
-            //     }
+            //Show spinner for 1.5 seconds
+            parserResult.innerHTML = '<img src="assets/138.gif" alt="loading..." style="width: 35px; height: 35px;">';
+            setTimeout(() => {
+                if (parser(input)) {
+                    parserResult.innerHTML = `<p>...and accepted by the parser.</p>`;
+                } else {
+                    parserResult.innerHTML = `<p>...and rejected by the parser.</p>`;
+                }
 
                 setTimeout(() => {
                     details.innerHTML = `<p>For more details, open your console in DevTools (ctrl+shift+i)</p>`;
                 }, 500);
-            // }, 1500);
+            }, 1500);
         }, 1500);
     }
 
