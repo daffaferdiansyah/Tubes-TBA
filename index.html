@@ -11,56 +11,53 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
         rel="stylesheet">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
-    <link rel="manifest" href="assets/favicon/site.webmanifest">
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>BOSO JOWO BRO!</title>
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 </head>
 
-<body>
-    <div class="bg-sky-700">
-
-    </div>
+<body class="bg-gray-700 text-white text-center">
     <header>
-        <h1>Sebuah web untuk bermain dengan bahasa jawa</h1>
+        <h1 class="font-bold text-4xl">Sebuah web untuk bermain dengan bahasa jawa</h1>
     </header>
 
     <main>
-        <h2>
-            Daftar kata
-        </h2>
-
-        <section class="cards">
-            <div class="card">
-                <h3>Kata Benda</h3>
-                <ul>
-                    <li>Aku : Aku</li>
-                    <li>Koe : Kamu</li>
-                    <li>Kembang : Bunga</li>
-                    <li>Banyu : Air</li>
-                    <li>Sego : Nasi</li>
-                    <li>Lawang : Pintu</li>
-                    <li>Layang : Surat</li>
-                    <li>Manuk : Burung</li>
-                </ul>
+        <div class="flex justify-center">
+            <div>
+                <h2 class="text-xl font-bold text-center mb-4">
+                    Daftar kata
+                </h2>
+        
+                <section class="cards grid grid-cols-2 gap-4">
+                    <div class="card bg-gray-500 p-4 rounded">
+                        <h3 class="font-bold text-lg">Kata Benda</h3>
+                        <ul>
+                            <li>Aku : Aku</li>
+                            <li>Koe : Kamu</li>
+                            <li>Kembang : Bunga</li>
+                            <li>Banyu : Air</li>
+                            <li>Sego : Nasi</li>
+                            <li>Lawang : Pintu</li>
+                            <li>Layang : Surat</li>
+                            <li>Manuk : Burung</li>
+                        </ul>
+                    </div>
+                    <div class="card bg-gray-500 p-4 rounded">
+                        <h3 class="font-bold text-lg">Kata Kerja</h3>
+                        <ul>
+                            <li>Mangan : Makan</li>
+                            <li>Ngombe : Minum</li>
+                            <li>Tuku : Beli</li>
+                        </ul>
+                    </div>
+                </section>
             </div>
-            <div class="card">
-                <h3>Kata Kerja</h3>
-                <ul>
-                    <li>Mangan : Makan</li>
-                    <li>Ngombe : Minum</li>
-                    <li>Tuku : Beli</li>
-                </ul>
-            </div>
-        </section>
+        </div>
 
-        <p>Aturan bermain : Masukkan kalimat dengan format "Kata Benda" + "Kata Kerja" + "Kata Benda"</p>
+        <p>Aturan bermain : Masukkan kalimat dalam bahasa jawa dengan format "Kata Benda" + "Kata Kerja" + "Kata Benda"</p>
 
-        <form action="">
-            <input type="text" name="input" id="input" placeholder="Input your sentence here">
-            <button type="submit">Check</button>
+        <form action="" class="my-5">
+            <input class="px-4 py-2 rounded text-black" type="text" name="input" id="input" placeholder="Input your sentence here">
+            <button class="bg-gray-500 p-2 rounded" type="submit">Check</button>
         </form>
 
         <section id="result">
@@ -70,12 +67,16 @@
         </section>
     </main>
 
+    <div class="flex justify-center">
+        <div class="">
+            <img class="" src="https://pbs.twimg.com/media/DbWaOPuU0AAWloU.jpg" width="200" alt="" srcset="">
+        </div>
+    </div>
     <footer>
-        <p>Nek gelem, ono ning <a href="https://github.com/daffaferdiansyah/Tubes-TBA" target="_blank">GitHub</a> yo rek!
+        <p>Nek gelem, ono ning <a href="https://github.com/daffaferdiansyah/Tubes-TBA" class="underline hover:text-blue-400" target="_blank">GitHub</a> yo rek!
         </p>
-        <p>(Kalau mau, ada di <a href="https://github.com/daffaferdiansyah/Tubes-TBA" target="_blank">GitHub</a> ya gais!)</p>
+        <p>(Kalau mau, ada di <a href="https://github.com/daffaferdiansyah/Tubes-TBA" class="underline hover:text-blue-400" target="_blank">GitHub</a> ya gais!)</p>
     </footer>
-
 </body>
 
 <script type="module" src="script.js"></script>
